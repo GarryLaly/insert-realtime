@@ -1,0 +1,32 @@
+<html>
+<head>
+    <title>Test Socket.io</title>
+    <script type="text/javascript" src="http://localhost:3000/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var socket = io.connect("http://localhost:3000");
+            
+            socket.on("list", function(data){
+                var list = "";
+                data.forEach(function(arr){
+                    list += arr.username + "<br>";
+                });
+                $("div.data").html(list);
+            });
+            
+            $(".btn").click(function(){
+                var value = $(".txt").val();
+                socket.emit("insert", value);
+            });
+        });
+    </script>
+</head>
+<body>
+    <button class="btn">Insert</button>
+    <input type="text" class="txt" /><br /><br />
+    <div class="data">
+        
+    </div>
+</body>
+</html>
